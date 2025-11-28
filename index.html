@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<title>REIS 2026 — WE ARE FAMILI</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f4f4 url('https://i.imgur.com/Y7KQ4dV.png') repeat;
+    margin: 0;
+    padding: 0;
+}
+header {
+    background: #c62828;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px black;
+}
+nav {
+    display: flex;
+    background: #8e0000;
+}
+nav button {
+    flex: 1;
+    padding: 15px;
+    background: #8e0000;
+    color: white;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+}
+nav button:hover {
+    background: #b71c1c;
+}
+.page {
+    display: none;
+    padding: 20px;
+}
+h2 {
+    color: #b71c1c;
+}
+label {
+    font-weight: bold;
+}
+input, textarea {
+    width: 100%;
+    margin-bottom: 12px;
+    padding: 8px;
+}
+#giftList {
+    margin-top: 20px;
+}
+.giftItem {
+    background: white;
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    box-shadow: 0 0 4px rgba(0,0,0,0.2);
+}
+.giftItem img {
+    max-width: 120px;
+    margin-top: 8px;
+}
+.deleteBtn {
+    background: #c62828;
+    color: white;
+    border: none;
+    padding: 6px 10px;
+    cursor: pointer;
+    margin-top: 10px;
+    border-radius: 5px;
+}
+.addBtn {
+    background: #2e7d32;
+    color: white;
+    padding: 12px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 10px;
+    font-size: 18px;
+    border-radius: 6px;
+}
+.typeBtn {
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    background: #0277bd;
+    color: white;
+    margin-bottom: 15px;
+    border-radius: 5px;
+}
+.tabActive {
+    display: block;
+}
+</style>
+</head>
+
+<body>
+
+<header>REIS 2026 — WE ARE FAMILI</header>
+
+<nav>
+    <button onclick="openTab('marc')">Marc</button>
+    <button onclick="openTab('aina')">Aina</button>
+    <button onclick="openTab('mama')">Mamà</button>
+    <button onclick="openTab('papa')">Papà</button>
+</nav>
+
+<div id="container"></div>
+
+<script>
+// --- DADES GLOBALS ---
+const users = ["marc", "aina", "mama", "papa"];
+
+// Crear pàgines dinàmicament
+function initPages() {
+    let html = "";
+    users.forEach(user => {
+        html += `
+        <div id="${user}" class="page">
+            <h2>${user.toUpperCase()}</h2>
+
+            <button class="typeBtn" onclick="toggleType('${user}')"
+                id="type_${user}">Caprici</button>
+
+            <label>Descripció del regal:</label>
+            <textarea id="desc_${user}" rows="3"></textarea>
+
+            <label>URL del regal:</label>
+            <input id="url_${user}" placeholder="https://">
+
+            <label>Imatge (URL):</label>
+            <input id="img_${user}" placeholder="https://">
+
+            <button class="addBtn" onclick="addGift('${user}')">Afegir a la llista</button>
+
+            <h3>Regals afegits:</h3>
+            <div id="list_${user}"></div>
+        </div>`;
+    });
+    document.getElementById("container").innerHTML = html;
+}
+
+// Obrir pestanya
+function openTab(name) {
+    document.querySelectorAll(".page").forEach(p => p.style.display = "none");
+    document.getElementById(name).style.display = "block";
+    loadGifts(name);
+}
+
+// Canviar Caprici / Necessitat
+function toggleType(user) {
+    const btn = document.getElementById("type_" + user);
+    btn.textContent = btn.textContent === "Caprici" ? "Necessitat" : "Caprici";
+}
+
+// Afegir regal
+function addGift(user) {
+    let desc = document.getElementById("desc_" + user).value.trim();
+    let url = document.getElementById("url_" + user).value.trim();
+    let img = document.getElementById("img_" + user).value.trim();
+    let type = document.getElementById("type_" + user).textContent;
+
+    if (!desc && !url && !img) {
+        alert("Cal omplir almenys un camp.");
+        return;
+    }
+
+    let gifts = JSON.parse(localStorage.getItem("reis_" + user) || "[]");
+
+    gifts.push({ desc, url, img, type });
+    localStorage.setItem("reis_" + user, JSON.stringify(gifts));
+
+    document.getElementById("desc_" + user).value = "";
+    document.getElementById("url_" + user).value = "";
+    document.getElementById("img_" + user).value = "";
+
+    loadGifts(user);
+}
+
+// Mostrar regals
+function loadGifts(user) {
+    let list = document.getElementById("list_" + user);
+    list.innerHTML = "";
+
+    let gifts = JSON.parse(localStorage.getItem("reis_" + user) || "[]");
+
+    gifts.forEach((g, index) => {
+        list.innerHTML += `
+            <div class="giftItem">
+                <b>${g.type}</b><br>
+                ${g.desc ? g.desc + "<br>" : ""}
+                ${g.url ? `<a href="${g.url}" target="_blank">🔗 Enllaç al regal</a><br>` : ""}
+                ${g.img ? `<img src="${g.img}">` : ""}
+                <br>
+                <button class="deleteBtn" onclick="deleteGift('${user}', ${index})">Esborrar</button>
+            </div>
+        `;
+    });
+}
+
+// Esborrar regal
+function deleteGift(user, index) {
+    let gifts = JSON.parse(localStorage.getItem("reis_" + user) || "[]");
+    gifts.splice(index, 1);
+    localStorage.setItem("reis_" + user, JSON.stringify(gifts));
+    loadGifts(user);
+}
+
+// Inicialització
+initPages();
+openTab("marc");
+</script>
+
+</body>
+</html>
