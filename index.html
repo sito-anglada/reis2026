@@ -1,207 +1,242 @@
 <!DOCTYPE html>
 <html lang="ca">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Reis 2026 — We Are Famili</title>
-
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>REIS 2026 — WE ARE FAMILI</title>
 <style>
-    body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        background: white;
-        color: #333;
-    }
-
-    header {
-        background: #b30000;
-        padding: 20px;
-        text-align: center;
-        color: white;
-        font-size: 26px;
-        font-weight: bold;
-    }
-
-    nav {
-        display: flex;
-        justify-content: center;
-        background: #990000;
-        padding: 12px 0;
-        gap: 40px;
-    }
-
-    nav button {
-        background: transparent;
-        border: none;
-        color: white;
-        font-size: 18px;
-        cursor: pointer;
-        padding-bottom: 6px;
-    }
-
-    nav button.active {
-        border-bottom: 3px solid white;
-        font-weight: bold;
-    }
-
-    .container {
-        max-width: 800px;
-        margin: 20px auto;
-        padding: 20px;
-    }
-
-    .selector {
-        margin-bottom: 20px;
-    }
-
-    .selector label {
-        margin-right: 20px;
-        font-size: 18px;
-    }
-
-    input[type="text"] {
-        width: 100%;
-        padding: 10px;
-        font-size: 16px;
-        margin-bottom: 15px;
-        border: 1px solid #ccc;
-        border-radius: 6px;
-    }
-
-    button.add-btn {
-        background: #b30000;
-        color: white;
-        padding: 12px 18px;
-        border: none;
-        border-radius: 6px;
-        cursor: pointer;
-        font-size: 16px;
-    }
-
-    h3 {
-        border-bottom: 2px solid #b30000;
-        padding-bottom: 6px;
-    }
-
-    .gift-item {
-        border: 1px solid #ddd;
-        padding: 10px;
-        border-radius: 6px;
-        margin-bottom: 10px;
-    }
-
-    .gift-item a {
-        color: #b30000;
-        font-weight: bold;
-        text-decoration: underline;
-    }
-
-    .delete-btn {
-        background: #444;
-        color: white;
-        padding: 5px 10px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        margin-top: 10px;
-    }
+  :root{
+    --bg: #ffffff;
+    --accent-marc: #0b79d0;
+    --accent-aina: #8a2be2;
+    --accent-mama: #2e7d32;
+    --accent-papa: #ff8c00;
+    --header: #b30000;
+  }
+  html,body{height:100%;margin:0;background:var(--bg);font-family:Arial,Helvetica,sans-serif;color:#222}
+  header{background:var(--header);color:#fff;padding:18px 12px;text-align:center;font-size:26px;font-weight:700}
+  nav{display:flex;justify-content:center;gap:18px;padding:10px;background:#900;flex-wrap:wrap}
+  nav button{background:transparent;border:none;color:#fff;padding:10px 16px;font-size:16px;cursor:pointer;border-radius:6px}
+  nav button.active{box-shadow:0 2px 0 rgba(0,0,0,0.15);font-weight:700}
+  .container{max-width:900px;margin:22px auto;padding:0 12px}
+  .tab-header{font-size:28px;font-weight:800;margin:8px 0}
+  .controls{display:flex;flex-direction:column;gap:8px;background:#fff;padding:14px;border-radius:8px;border:1px solid #e2e2e2}
+  label{font-weight:700;margin-top:6px;display:block}
+  input[type="text"], textarea{width:100%;padding:10px;border:1px solid #cfcfcf;border-radius:6px;font-size:15px;box-sizing:border-box}
+  textarea{min-height:72px;resize:vertical}
+  .type-row{display:flex;gap:8px;align-items:center}
+  .type-row input{margin-right:6px}
+  .add-btn{margin-top:8px;background:#b30000;color:#fff;border:none;padding:12px;border-radius:8px;font-weight:700;cursor:pointer}
+  .grid{display:grid;grid-template-columns:1fr;gap:12px;margin-top:16px}
+  .gift-item{background:#fff;padding:12px;border-radius:8px;border-left:6px solid #ddd;position:relative;overflow:hidden}
+  .gift-item img{max-width:140px;display:block;margin-top:8px;border-radius:6px}
+  .gift-meta{font-size:13px;color:#555;margin-bottom:6px}
+  .delete-btn{position:absolute;right:10px;top:10px;background:#444;color:#fff;border:none;padding:6px 9px;border-radius:6px;cursor:pointer}
+  .gift-actions{margin-top:8px}
+  .gift-actions a{display:inline-block;margin-right:8px;color:inherit;text-decoration:underline}
+  /* color accents per tab */
+  .accent-marc{border-left-color:var(--accent-marc)}
+  .accent-aina{border-left-color:var(--accent-aina)}
+  .accent-mama{border-left-color:var(--accent-mama)}
+  .accent-papa{border-left-color:var(--accent-papa)}
+  /* small screens */
+  @media (max-width:600px){ header{font-size:20px} .tab-header{font-size:22px} .gift-item img{max-width:120px} }
 </style>
-
 </head>
 <body>
 
 <header>REIS 2026 — WE ARE FAMILI</header>
 
 <nav>
-    <button onclick="changeTab('marc')" id="tab-marc" class="active">Marc</button>
-    <button onclick="changeTab('aina')" id="tab-aina">Aina</button>
-    <button onclick="changeTab('mama')" id="tab-mama">Mamà</button>
-    <button onclick="changeTab('papa')" id="tab-papa">Papà</button>
+  <button id="btn-marc">MARC</button>
+  <button id="btn-aina">AINA</button>
+  <button id="btn-mama">MAMÀ</button>
+  <button id="btn-papa">PAPÀ</button>
 </nav>
 
 <div class="container">
+  <!-- dynamic header showing current tab name -->
+  <div id="tabName" class="tab-header">MARC</div>
 
-    <!-- Selector Necessitat / Caprici -->
-    <div class="selector">
-        <label><input type="radio" name="tipus" value="Necessitat" checked> Necessitat</label>
-        <label><input type="radio" name="tipus" value="Caprici"> Caprici</label>
+  <!-- controls (labels included) -->
+  <div class="controls" id="controls">
+    <div class="type-row">
+      <label style="margin:0 8px 0 0">Tipus:</label>
+      <label><input type="radio" name="type" value="Necessitat" checked> Necessitat</label>
+      <label><input type="radio" name="type" value="Caprici"> Caprici</label>
     </div>
 
-    <!-- Camps -->
-    <input id="textInput" type="text" placeholder="Nom o descripció del regal">
-    <input id="urlInput" type="text" placeholder="Enllaç opcional (Amazon, botiga, etc.)">
+    <div>
+      <label for="textInput">Descripció / Nom del regal</label>
+      <textarea id="textInput" placeholder="Escriu aquí la descripció o el nom del regal"></textarea>
+    </div>
 
-    <button class="add-btn" onclick="addGift()">Afegir a la llista</button>
+    <div>
+      <label for="imgInput">URL de la imatge (opcional)</label>
+      <input id="imgInput" type="text" placeholder="https://exemple.com/imatge.jpg">
+    </div>
 
-    <h3>Llista de regals</h3>
-    <div id="giftList"></div>
+    <div>
+      <label for="urlInput">Enllaç al producte / botiga (opcional)</label>
+      <input id="urlInput" type="text" placeholder="https://amazon.es/…">
+    </div>
 
+    <button class="add-btn" id="addBtn">Afegir a la llista</button>
+  </div>
+
+  <h3 style="margin-top:18px">Regals afegits</h3>
+  <div id="giftList" class="grid"></div>
 </div>
 
 <script>
-let currentTab = "marc";
-let data = {
-    marc: [],
-    aina: [],
-    mama: [],
-    papa: []
-};
+(function(){
+  // tabs config
+  const tabs = ['marc','aina','mama','papa'];
+  const btns = {
+    marc: document.getElementById('btn-marc'),
+    aina: document.getElementById('btn-aina'),
+    mama: document.getElementById('btn-mama'),
+    papa: document.getElementById('btn-papa')
+  };
+  let current = 'marc';
 
-function changeTab(tab) {
-    currentTab = tab;
+  // init buttons
+  tabs.forEach(t=>{
+    btns[t].addEventListener('click', ()=> switchTab(t));
+  });
 
-    // activar botó correcte
-    document.querySelectorAll("nav button").forEach(btn => btn.classList.remove("active"));
-    document.getElementById("tab-" + tab).classList.add("active");
+  // storage key
+  function keyFor(tab){ return 'reis2026_' + tab; }
 
-    renderList();
-}
+  // load data for tab
+  function load(tab){
+    try {
+      return JSON.parse(localStorage.getItem(keyFor(tab))) || [];
+    } catch(e){ return []; }
+  }
+  // save
+  function save(tab, arr){ localStorage.setItem(keyFor(tab), JSON.stringify(arr)); }
 
-function addGift() {
-    const text = document.getElementById("textInput").value.trim();
-    const url = document.getElementById("urlInput").value.trim();
-    const tipus = document.querySelector("input[name='tipus']:checked").value;
+  // switch tab
+  function switchTab(tab){
+    current = tab;
+    // header name
+    document.getElementById('tabName').textContent = tab.toUpperCase();
+    // active button style
+    Object.keys(btns).forEach(k=> btns[k].classList.remove('active'));
+    btns[tab].classList.add('active');
+    // update accent of existing items on render
+    render();
+  }
 
-    if (text === "") {
-        alert("Has d'escriure un regal!");
-        return;
+  // helper to get selected type
+  function selectedType(){
+    const r = document.querySelector("input[name='type']:checked");
+    return r ? r.value : 'Necessitat';
+  }
+
+  // add item
+  document.getElementById('addBtn').addEventListener('click', ()=>{
+    const text = document.getElementById('textInput').value.trim();
+    const img  = document.getElementById('imgInput').value.trim();
+    const url  = document.getElementById('urlInput').value.trim();
+    const type = selectedType();
+
+    if(!text && !img && !url){
+      alert('Introdueix com a mínim una descripció, imatge o enllaç.');
+      return;
     }
 
-    data[currentTab].push({ text, url, tipus });
+    const arr = load(current);
+    arr.push({type, text, img, url});
+    save(current, arr);
 
-    // buidar camps
-    document.getElementById("textInput").value = "";
-    document.getElementById("urlInput").value = "";
+    // clear fields
+    document.getElementById('textInput').value = '';
+    document.getElementById('imgInput').value = '';
+    document.getElementById('urlInput').value = '';
 
-    renderList();
-}
+    render();
+  });
 
-function deleteGift(index) {
-    data[currentTab].splice(index, 1);
-    renderList();
-}
+  // delete item
+  window.deleteGift = function(index){
+    const arr = load(current);
+    arr.splice(index,1);
+    save(current, arr);
+    render();
+  };
 
-function renderList() {
-    const container = document.getElementById("giftList");
-    container.innerHTML = "";
+  // color class mapping
+  function accentClass(tab){
+    if(tab==='marc') return 'accent-marc';
+    if(tab==='aina') return 'accent-aina';
+    if(tab==='mama') return 'accent-mama';
+    return 'accent-papa';
+  }
 
-    data[currentTab].forEach((gift, index) => {
+  // render list for current tab
+  function render(){
+    const container = document.getElementById('giftList');
+    container.innerHTML = '';
+    const arr = load(current);
 
-        const div = document.createElement("div");
-        div.className = "gift-item";
+    arr.forEach((g,i)=>{
+      const div = document.createElement('div');
+      div.className = 'gift-item ' + accentClass(current);
 
-        let html = `<strong>${gift.tipus}:</strong> ${gift.text}<br>`;
+      // meta line
+      const meta = document.createElement('div');
+      meta.className = 'gift-meta';
+      meta.textContent = `${g.type || ''}` + (g.text ? ` — ${g.text}` : '');
+      div.appendChild(meta);
 
-        if (gift.url) {
-            html += `<a href="${gift.url}" target="_blank">Veure enllaç</a><br>`;
-        }
+      // image preview if exists
+      if(g.img){
+        const img = document.createElement('img');
+        img.src = g.img;
+        img.alt = 'imatge regal';
+        // if image fails to load, hide it silently
+        img.onerror = ()=> { img.style.display='none'; };
+        div.appendChild(img);
+      }
 
-        html += `<button class="delete-btn" onclick="deleteGift(${index})">Esborrar</button>`;
+      // link if exists
+      if(g.url){
+        const p = document.createElement('div');
+        p.className = 'gift-actions';
+        const a = document.createElement('a');
+        a.href = g.url;
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+        a.textContent = 'Veure enllaç al producte';
+        p.appendChild(a);
+        div.appendChild(p);
+      }
 
-        div.innerHTML = html;
-        container.appendChild(div);
+      // delete button
+      const btn = document.createElement('button');
+      btn.className = 'delete-btn';
+      btn.textContent = 'Esborrar';
+      btn.onclick = ()=> deleteGift(i);
+      div.appendChild(btn);
+
+      container.appendChild(div);
     });
-}
+
+    // if empty, show small hint
+    if(arr.length===0){
+      container.innerHTML = '<em style="color:#666">Cap regal afegit encara per aquesta pestanya.</em>';
+    }
+  }
+
+  // initial load: set buttons and render
+  switchTab(current);
+  render();
+
+  // expose deleteGift for button onclick scope
+  function deleteGift(idx){ window.deleteGift(idx); }
+})();
 </script>
 
 </body>
