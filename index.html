@@ -124,13 +124,14 @@ return `
     <h2>${user.charAt(0).toUpperCase() + user.slice(1)}</h2>
 
     <div class="btnType">
-        <button onclick="selectType('${user}','Necessitat')">Necessitat</button>
-        <button onclick="selectType('${user}','Caprici')">Caprici</button>
+        <button id="need_${user}" onclick="selectType('${user}','Necessitat'); toggleButtons('${user}','need')">Necessitat</button>
+        <button id="wish_${user}" onclick="selectType('${user}','Caprici'); toggleButtons('${user}','wish')">Caprici</button>
     </div>
 
-    <textarea id="desc_${user}" placeholder="Descripció del regal"></textarea><br>
-    <input id="img_${user}" type="text" placeholder="URL de la imatge (opcional)"><br>
-    <input id="link_${user}" type="text" placeholder="Enllaç a la botiga (Amazon, Decathlon…)"><br>
+    <<label>Descripció del regal:</label><br>
+    <textarea id="desc_${user}" placeholder="Escriu aquí la descripció"></textarea><br>_${user}" placeholder="Descripció del regal"></textarea><br>
+    <input id="img_${user}" placeholder="URL de la imatge (opcional) — https://..."" type="text" placeholder="URL de la imatge (opcional)"><br>
+    <input id="link_${user}" placeholder="Enllaç a la botiga — https://..."" type="text" placeholder="Enllaç a la botiga (Amazon, Decathlon…)"><br>
 
     <button id="addBtn" onclick="addGift('${user}')">Afegir a la llista</button>
 
@@ -146,6 +147,27 @@ function selectType(user, type){
 }
 
 function addGift(user){
+    const descField = document.getElementById(`desc_${user}`);
+    const imgField = document.getElementById(`img_${user}`);
+    const linkField = document.getElementById(`link_${user}`);
+
+    const desc = descField.value.trim();
+    const img = imgField.value.trim();
+    const link = linkField.value.trim();
+
+    if(!desc && !img && !link) return;
+
+    const gift = { type: selectedType[user] || '', desc, img, link };
+    const list = JSON.parse(localStorage.getItem(user) || '[]');
+    list.push(gift);
+    localStorage.setItem(user, JSON.stringify(list));
+
+    descField.value = '';
+    imgField.value = '';
+    linkField.value = '';
+
+    updateList(user);
+}(user){
     const desc = document.getElementById(`desc_${user}`).value;
     const img = document.getElementById(`img_${user}`).value;
     const link = document.getElementById(`link_${user}`).value;
@@ -189,6 +211,12 @@ function openTab(name){
 }
 
 openTab('marc');
+function toggleButtons(user, chosen){
+    document.getElementById(`need_${user}`).classList.remove('active');
+    document.getElementById(`wish_${user}`).classList.remove('active');
+    if(chosen === 'need') document.getElementById(`need_${user}`).classList.add('active');
+    else document.getElementById(`wish_${user}`).classList.add('active');
+}
 </script>
 </body>
 </html>
