@@ -5,74 +5,190 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>REIS 2026 — WE ARE FAMILI</title>
 <style>
-body {
-margin: 0;
-font-family: Arial, sans-serif;
-background: url('8e580ff1-5fd8-423e-bbb1-4065c5f42060.png') center/cover no-repeat fixed;
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: url('8e580ff1-5fd8-423e-bbb1-4065c5f42060.png') center/cover no-repeat fixed;
+    }
+    .overlay {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(255,255,255,0.85);
+        z-index: -1;
+    }
+    header {
+        background: #b30000;
+        color: white;
+        padding: 20px;
+        text-align: center;
+        font-size: 28px;
+        font-weight: bold;
+    }
+    nav {
+        display: flex;
+        justify-content: center;
+        background: #8a0000;
+    }
+    nav button {
+        background: transparent;
+        border: none;
+        color: white;
+        padding: 15px 25px;
+        font-size: 18px;
+        cursor: pointer;
+    }
+    nav button:hover {
+        background: #b30000;
+    }
+    .tab {
+        display: none;
+        padding: 20px;
+    }
+    h2 {
+        color: #8a0000;
+    }
+    .btnType button {
+        padding: 10px 15px;
+        margin-right: 10px;
+        border: none;
+        background: #007bff;
+        color: white;
+        cursor: pointer;
+        border-radius: 6px;
+    }
+    .btnType button.active {
+        background: #0056b3;
+    }
+    input, textarea {
+        width: 90%;
+        padding: 8px;
+        margin: 8px 0;
+        border-radius: 6px;
+        border: 1px solid #999;
+    }
+    #addBtn {
+        background: #1b8f2e;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        cursor: pointer;
+        border-radius: 6px;
+        margin-top: 10px;
+    }
+    #addBtn:hover {
+        background: #146d22;
+    }
+    .giftItem {
+        background: white;
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+    }
+    .deleteBtn {
+        background: #cc0000;
+        color: white;
+        border: none;
+        padding: 6px 10px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+    a { color: blue; text-decoration: underline; }
+</style>
+</head>
+<body>
+<div class="overlay"></div>
+<header>REIS 2026 — WE ARE FAMILI</header>
+<nav>
+    <button onclick="openTab('marc')">Marc</button>
+    <button onclick="openTab('aina')">Aina</button>
+    <button onclick="openTab('mama')">Mamà</button>
+    <button onclick="openTab('papa')">Papà</button>
+</nav>
+
+<div id="marc" class="tab"></div>
+<div id="aina" class="tab"></div>
+<div id="mama" class="tab"></div>
+<div id="papa" class="tab"></div>
+
+<script>
+const tabs = ['marc','aina','mama','papa'];
+
+tabs.forEach(name => {
+    document.getElementById(name).innerHTML = generateTab(name);
+});
+
+function generateTab(user){
+return `
+    <h2>${user.charAt(0).toUpperCase() + user.slice(1)}</h2>
+
+    <div class="btnType">
+        <button onclick="selectType('${user}','Necessitat')">Necessitat</button>
+        <button onclick="selectType('${user}','Caprici')">Caprici</button>
+    </div>
+
+    <textarea id="desc_${user}" placeholder="Descripció del regal"></textarea><br>
+    <input id="img_${user}" type="text" placeholder="URL de la imatge (opcional)"><br>
+    <input id="link_${user}" type="text" placeholder="Enllaç a la botiga (Amazon, Decathlon…)"><br>
+
+    <button id="addBtn" onclick="addGift('${user}')">Afegir a la llista</button>
+
+    <h3>Regals afegits:</h3>
+    <div id="list_${user}"></div>
+`;
 }
-.overlay {
-position: fixed;
-top: 0; left: 0;
-width: 100%; height: 100%;
-background: rgba(255,255,255,0.85);
-z-index: -1;
+
+let selectedType = {};
+
+function selectType(user, type){
+    selectedType[user] = type;
 }
-header {
-background: #b30000;
-color: white;
-padding: 20px;
-text-align: center;
-font-size: 28px;
-font-weight: bold;
+
+function addGift(user){
+    const desc = document.getElementById(`desc_${user}`).value;
+    const img = document.getElementById(`img_${user}`).value;
+    const link = document.getElementById(`link_${user}`).value;
+
+    if(!desc && !img && !link) return;
+
+    const gift = { type: selectedType[user] || '', desc, img, link };
+    const list = JSON.parse(localStorage.getItem(user) || '[]');
+    list.push(gift);
+    localStorage.setItem(user, JSON.stringify(list));
+
+    updateList(user);
 }
-nav {
-display: flex;
-justify-content: center;
-background: #8a0000;
+
+function updateList(user){
+    const container = document.getElementById(`list_${user}`);
+    const list = JSON.parse(localStorage.getItem(user) || '[]');
+
+    container.innerHTML = list.map((g,i)=>`
+        <div class="giftItem">
+            <b>${g.type}</b><br>
+            ${g.desc}<br>
+            ${g.img ? `<img src="${g.img}" style="max-width:120px; margin:8px 0;">` : ''}
+            ${g.link ? `<br><a href="${g.link}" target="_blank">Obrir enllaç</a>` : ''}<br>
+            <button class="deleteBtn" onclick="deleteGift('${user}',${i})">Esborrar</button>
+        </div>
+    `).join('');
 }
-nav button {
-background: transparent;
-border: none;
-color: white;
-padding: 15px 25px;
-font-size: 18px;
-cursor: pointer;
+
+function deleteGift(user, index){
+    const list = JSON.parse(localStorage.getItem(user) || '[]');
+    list.splice(index,1);
+    localStorage.setItem(user, JSON.stringify(list));
+    updateList(user);
 }
-nav button:hover {
-background: #b30000;
+
+function openTab(name){
+    document.querySelectorAll('.tab').forEach(t=>t.style.display='none');
+    document.getElementById(name).style.display='block';
+    updateList(name);
 }
-.tab {
-display: none;
-padding: 20px;
-}
-h2 {
-color: #8a0000;
-}
-.btnType button {
-padding: 10px 15px;
-margin-right: 10px;
-border: none;
-background: #007bff;
-color: white;
-cursor: pointer;
-border-radius: 6px;
-}
-.btnType button.active {
-background: #0056b3;
-}
-input, textarea {
-width: 90%;
-padding: 8px;
-margin: 8px 0;
-border-radius: 6px;
-border: 1px solid #999;
-}
-#addBtn {
-background: #1b8f2e;
-color: white;
-padding: 12px 20px;
-border: none;
-cursor: pointer;
-border-radius: 6px;
-margin-top: 10px;
-}
+
+openTab('marc');
+</script>
+</body>
+</html>
