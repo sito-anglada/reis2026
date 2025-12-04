@@ -212,35 +212,6 @@
             cursor: pointer;
         }
         
-        .image-option-buttons {
-            display: flex;
-            gap: 10px;
-            margin-top: 10px;
-        }
-        
-        .btn-secondary {
-            background: #6c757d;
-            color: white;
-            padding: 8px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 0.9em;
-        }
-        
-        .btn-secondary:hover {
-            background: #5a6268;
-        }
-        
-        .image-input-group {
-            margin-top: 10px;
-            display: none;
-        }
-        
-        .image-input-group.active {
-            display: block;
-        }
-        
         .btn {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
@@ -255,6 +226,11 @@
         
         .btn:hover {
             transform: scale(1.05);
+        }
+        
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
         
         .gift-list {
@@ -349,12 +325,12 @@
             padding: 40px;
             font-style: italic;
         }
-        
-        .image-preview {
-            max-width: 200px;
-            max-height: 200px;
-            margin-top: 10px;
-            border-radius: 5px;
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #667eea;
+            font-size: 1.2em;
         }
         
         @media (max-width: 968px) {
@@ -409,18 +385,9 @@
                         </div>
                         
                         <div class="form-group">
-                            <label>Imatge:</label>
-                            <div class="image-option-buttons">
-                                <button type="button" class="btn-secondary" onclick="toggleImageInput('marc', 'file')">📁 Pujar arxiu</button>
-                                <button type="button" class="btn-secondary" onclick="toggleImageInput('marc', 'url')">🔗 URL imatge</button>
-                            </div>
-                            <div id="marc-image-file" class="image-input-group">
-                                <input type="file" id="marc-image-file-input" accept="image/*">
-                                <img id="marc-image-preview" class="image-preview" style="display:none;">
-                            </div>
-                            <div id="marc-image-url" class="image-input-group">
-                                <input type="url" id="marc-image-url-input" placeholder="https://exemple.com/imatge.jpg">
-                            </div>
+                            <label>URL de la imatge:</label>
+                            <input type="url" id="marc-image" placeholder="https://exemple.com/imatge.jpg">
+                            <small style="color: #6c757d; display: block; margin-top: 5px;">Puja la imatge a imgur.com i copia l'enllaç directe</small>
                         </div>
                         
                         <div class="form-group">
@@ -437,7 +404,7 @@
                     </div>
                     
                     <h2 class="section-title">Els meus regals</h2>
-                    <div id="marc-list" class="gift-list"></div>
+                    <div id="marc-list" class="gift-list"><div class="loading">⏳ Carregant...</div></div>
                 </div>
                 
                 <div id="aina" class="tab-content">
@@ -463,18 +430,9 @@
                         </div>
                         
                         <div class="form-group">
-                            <label>Imatge:</label>
-                            <div class="image-option-buttons">
-                                <button type="button" class="btn-secondary" onclick="toggleImageInput('aina', 'file')">📁 Pujar arxiu</button>
-                                <button type="button" class="btn-secondary" onclick="toggleImageInput('aina', 'url')">🔗 URL imatge</button>
-                            </div>
-                            <div id="aina-image-file" class="image-input-group">
-                                <input type="file" id="aina-image-file-input" accept="image/*">
-                                <img id="aina-image-preview" class="image-preview" style="display:none;">
-                            </div>
-                            <div id="aina-image-url" class="image-input-group">
-                                <input type="url" id="aina-image-url-input" placeholder="https://exemple.com/imatge.jpg">
-                            </div>
+                            <label>URL de la imatge:</label>
+                            <input type="url" id="aina-image" placeholder="https://exemple.com/imatge.jpg">
+                            <small style="color: #6c757d; display: block; margin-top: 5px;">Puja la imatge a imgur.com i copia l'enllaç directe</small>
                         </div>
                         
                         <div class="form-group">
@@ -491,7 +449,7 @@
                     </div>
                     
                     <h2 class="section-title">Els meus regals</h2>
-                    <div id="aina-list" class="gift-list"></div>
+                    <div id="aina-list" class="gift-list"><div class="loading">⏳ Carregant...</div></div>
                 </div>
                 
                 <div id="mama" class="tab-content">
@@ -517,18 +475,9 @@
                         </div>
                         
                         <div class="form-group">
-                            <label>Imatge:</label>
-                            <div class="image-option-buttons">
-                                <button type="button" class="btn-secondary" onclick="toggleImageInput('mama', 'file')">📁 Pujar arxiu</button>
-                                <button type="button" class="btn-secondary" onclick="toggleImageInput('mama', 'url')">🔗 URL imatge</button>
-                            </div>
-                            <div id="mama-image-file" class="image-input-group">
-                                <input type="file" id="mama-image-file-input" accept="image/*">
-                                <img id="mama-image-preview" class="image-preview" style="display:none;">
-                            </div>
-                            <div id="mama-image-url" class="image-input-group">
-                                <input type="url" id="mama-image-url-input" placeholder="https://exemple.com/imatge.jpg">
-                            </div>
+                            <label>URL de la imatge:</label>
+                            <input type="url" id="mama-image" placeholder="https://exemple.com/imatge.jpg">
+                            <small style="color: #6c757d; display: block; margin-top: 5px;">Puja la imatge a imgur.com i copia l'enllaç directe</small>
                         </div>
                         
                         <div class="form-group">
@@ -545,7 +494,7 @@
                     </div>
                     
                     <h2 class="section-title">Els meus regals</h2>
-                    <div id="mama-list" class="gift-list"></div>
+                    <div id="mama-list" class="gift-list"><div class="loading">⏳ Carregant...</div></div>
                 </div>
                 
                 <div id="papa" class="tab-content">
@@ -571,18 +520,9 @@
                         </div>
                         
                         <div class="form-group">
-                            <label>Imatge:</label>
-                            <div class="image-option-buttons">
-                                <button type="button" class="btn-secondary" onclick="toggleImageInput('papa', 'file')">📁 Pujar arxiu</button>
-                                <button type="button" class="btn-secondary" onclick="toggleImageInput('papa', 'url')">🔗 URL imatge</button>
-                            </div>
-                            <div id="papa-image-file" class="image-input-group">
-                                <input type="file" id="papa-image-file-input" accept="image/*">
-                                <img id="papa-image-preview" class="image-preview" style="display:none;">
-                            </div>
-                            <div id="papa-image-url" class="image-input-group">
-                                <input type="url" id="papa-image-url-input" placeholder="https://exemple.com/imatge.jpg">
-                            </div>
+                            <label>URL de la imatge:</label>
+                            <input type="url" id="papa-image" placeholder="https://exemple.com/imatge.jpg">
+                            <small style="color: #6c757d; display: block; margin-top: 5px;">Puja la imatge a imgur.com i copia l'enllaç directe</small>
                         </div>
                         
                         <div class="form-group">
@@ -599,161 +539,115 @@
                     </div>
                     
                     <h2 class="section-title">Els meus regals</h2>
-                    <div id="papa-list" class="gift-list"></div>
+                    <div id="papa-list" class="gift-list"><div class="loading">⏳ Carregant...</div></div>
                 </div>
             </div>
             
             <div class="summary-section">
                 <h3 class="summary-title">📋 Resum de Regals</h3>
-                <div id="summary-content"></div>
+                <div id="summary-content"><div class="loading">⏳ Carregant...</div></div>
             </div>
         </div>
     </div>
     
-    <script>
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getDatabase, ref, set, get, remove, onValue } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+
+        // Configuración de Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyBAMOMCbiIAXMWDF9U-a-Q9bb6aWhbLkec",
+            authDomain: "regals-reis-2026.firebaseapp.com",
+            databaseURL: "https://regals-reis-2026-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "regals-reis-2026",
+            storageBucket: "regals-reis-2026.firebasestorage.app",
+            messagingSenderId: "398576130432",
+            appId: "1:398576130432:web:9e72b5119e0293a3778965"
+        };
+
+        // Inicializar Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
         const gifts = {
             marc: [],
             aina: [],
             mama: [],
             papa: []
         };
-        
-        let currentImageMode = {};
-        let isLoading = true;
-        
-        // Cargar datos al iniciar
-        async function loadAllGifts() {
-            try {
-                const users = ['marc', 'aina', 'mama', 'papa'];
-                for (const user of users) {
-                    try {
-                        const result = await window.storage.get(`gifts-${user}`, true);
-                        if (result && result.value) {
-                            gifts[user] = JSON.parse(result.value);
-                        }
-                    } catch (e) {
-                        // Si no existe, dejamos el array vacío
-                        gifts[user] = [];
-                    }
-                }
-                isLoading = false;
-                // Renderizar todos los usuarios
-                users.forEach(user => renderGifts(user));
-                updateSummary();
-            } catch (error) {
-                console.error('Error cargando datos:', error);
-                isLoading = false;
-            }
+
+        // Escuchar cambios en tiempo real
+        function setupRealtimeListeners() {
+            ['marc', 'aina', 'mama', 'papa'].forEach(user => {
+                const userRef = ref(database, `gifts/${user}`);
+                onValue(userRef, (snapshot) => {
+                    const data = snapshot.val();
+                    gifts[user] = data ? Object.values(data) : [];
+                    window.renderGifts(user);
+                    window.updateSummary();
+                });
+            });
         }
-        
-        // Guardar datos en el servidor
-        async function saveGifts(user) {
-            try {
-                await window.storage.set(`gifts-${user}`, JSON.stringify(gifts[user]), true);
-            } catch (error) {
-                console.error('Error guardando datos:', error);
-                alert('Error al guardar. Por favor, intenta de nuevo.');
-            }
-        }
-        
-        function switchTab(user) {
+
+        window.switchTab = function(user) {
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
             
             event.target.classList.add('active');
             document.getElementById(user).classList.add('active');
             
-            updateSummary();
-        }
-        
-        function toggleImageInput(user, mode) {
-            const fileInput = document.getElementById(`${user}-image-file`);
-            const urlInput = document.getElementById(`${user}-image-url`);
-            
-            if (mode === 'file') {
-                fileInput.classList.add('active');
-                urlInput.classList.remove('active');
-                currentImageMode[user] = 'file';
-            } else {
-                urlInput.classList.add('active');
-                fileInput.classList.remove('active');
-                currentImageMode[user] = 'url';
-            }
-        }
-        
-        function addGift(user) {
+            window.updateSummary();
+        };
+
+        window.addGift = async function(user) {
             const typeRadio = document.querySelector(`input[name="${user}-type"]:checked`);
             const type = typeRadio ? typeRadio.value : 'need';
             const text = document.getElementById(`${user}-text`).value;
+            const image = document.getElementById(`${user}-image`).value;
             const link1 = document.getElementById(`${user}-link1`).value;
             const link2 = document.getElementById(`${user}-link2`).value;
             
-            if (!text && !link1 && !link2 && currentImageMode[user] !== 'file' && currentImageMode[user] !== 'url') {
+            if (!text && !image && !link1 && !link2) {
                 alert('Si us plau, afegeix almenys una descripció, imatge o enllaç!');
                 return;
             }
-            
-            const processGift = async (imageData) => {
-                const gift = { 
-                    type,
-                    text, 
-                    image: imageData, 
-                    link1, 
-                    link2, 
-                    id: Date.now() 
-                };
-                gifts[user].push(gift);
-                
-                // Guardar en el servidor
-                await saveGifts(user);
+
+            const gift = { 
+                type,
+                text, 
+                image, 
+                link1, 
+                link2, 
+                id: Date.now() 
+            };
+
+            try {
+                const giftRef = ref(database, `gifts/${user}/${gift.id}`);
+                await set(giftRef, gift);
                 
                 document.getElementById(`${user}-text`).value = '';
+                document.getElementById(`${user}-image`).value = '';
                 document.getElementById(`${user}-link1`).value = '';
                 document.getElementById(`${user}-link2`).value = '';
-                
-                const fileInput = document.getElementById(`${user}-image-file-input`);
-                const urlInput = document.getElementById(`${user}-image-url-input`);
-                const preview = document.getElementById(`${user}-image-preview`);
-                
-                if (fileInput) fileInput.value = '';
-                if (urlInput) urlInput.value = '';
-                if (preview) preview.style.display = 'none';
-                
-                document.getElementById(`${user}-image-file`).classList.remove('active');
-                document.getElementById(`${user}-image-url`).classList.remove('active');
-                currentImageMode[user] = null;
-                
-                renderGifts(user);
-                updateSummary();
-            };
-            
-            if (currentImageMode[user] === 'file') {
-                const fileInput = document.getElementById(`${user}-image-file-input`);
-                if (fileInput.files[0]) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        processGift(e.target.result);
-                    };
-                    reader.readAsDataURL(fileInput.files[0]);
-                } else {
-                    processGift('');
-                }
-            } else if (currentImageMode[user] === 'url') {
-                const urlInput = document.getElementById(`${user}-image-url-input`);
-                processGift(urlInput.value);
-            } else {
-                processGift('');
+            } catch (error) {
+                console.error('Error guardant:', error);
+                alert('Error al guardar el regal. Si us plau, intenta-ho de nou.');
             }
-        }
-        
-        async function deleteGift(user, id) {
-            gifts[user] = gifts[user].filter(g => g.id !== id);
-            await saveGifts(user);
-            renderGifts(user);
-            updateSummary();
-        }
-        
-        function renderGifts(user) {
+        };
+
+        window.deleteGift = async function(user, id) {
+            if (confirm('Segur que vols eliminar aquest regal?')) {
+                try {
+                    const giftRef = ref(database, `gifts/${user}/${id}`);
+                    await remove(giftRef);
+                } catch (error) {
+                    console.error('Error eliminant:', error);
+                    alert('Error al eliminar el regal.');
+                }
+            }
+        };
+
+        window.renderGifts = function(user) {
             const container = document.getElementById(`${user}-list`);
             const giftList = gifts[user];
             
@@ -770,7 +664,7 @@
                     <div class="gift-card">
                         <div class="gift-badge ${badgeClass}">${badgeText}</div>
                         <button class="delete-btn" onclick="deleteGift('${user}', ${gift.id})">×</button>
-                        ${gift.image ? `<img src="${gift.image}" class="gift-image" alt="Imatge del regal">` : ''}
+                        ${gift.image ? `<img src="${gift.image}" class="gift-image" alt="Imatge del regal" onerror="this.style.display='none'">` : ''}
                         ${gift.text ? `<div class="gift-text">${gift.text}</div>` : ''}
                         ${gift.link1 || gift.link2 ? `
                             <div class="gift-links">
@@ -781,9 +675,9 @@
                     </div>
                 `;
             }).join('');
-        }
-        
-        function updateSummary() {
+        };
+
+        window.updateSummary = function() {
             const activeTab = document.querySelector('.tab-content.active');
             const user = activeTab ? activeTab.id : 'marc';
             const summaryContent = document.getElementById('summary-content');
@@ -806,35 +700,10 @@
                     </div>
                 `;
             }).join('');
-        }
-        
-        document.addEventListener('DOMContentLoaded', async () => {
-            // Cargar todos los datos al inicio
-            await loadAllGifts();
-            
-            ['marc', 'aina', 'mama', 'papa'].forEach(user => {
-                const fileInput = document.getElementById(`${user}-image-file-input`);
-                const preview = document.getElementById(`${user}-image-preview`);
-                
-                if (fileInput && preview) {
-                    fileInput.addEventListener('change', function(e) {
-                        const file = e.target.files[0];
-                        if (file) {
-                            const reader = new FileReader();
-                            reader.onload = function(e) {
-                                preview.src = e.target.result;
-                                preview.style.display = 'block';
-                            };
-                            reader.readAsDataURL(file);
-                        } else {
-                            preview.style.display = 'none';
-                        }
-                    });
-                }
-            });
-            
-            updateSummary();
-        });
+        };
+
+        // Iniciar listeners en tiempo real
+        setupRealtimeListeners();
     </script>
 </body>
 </html>
