@@ -77,60 +77,12 @@
         }
         
         .content {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 20px;
             padding: 30px;
         }
         
         .main-section {
-            padding-right: 20px;
-        }
-        
-        .summary-section {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 10px;
-            max-height: calc(100vh - 300px);
-            overflow-y: auto;
-            position: sticky;
-            top: 20px;
-        }
-        
-        .summary-title {
-            font-size: 1.5em;
-            color: #667eea;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #f093fb;
-        }
-        
-        .summary-item {
-            background: white;
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 5px;
-            border-left: 4px solid #f5576c;
-            font-size: 0.9em;
-        }
-        
-        .summary-badge {
-            display: inline-block;
-            padding: 3px 8px;
-            border-radius: 12px;
-            font-size: 0.8em;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        
-        .badge-need {
-            background: #28a745;
-            color: white;
-        }
-        
-        .badge-want {
-            background: #ffc107;
-            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
         }
         
         .tab-content {
@@ -254,14 +206,22 @@
         }
         
         .gift-badge {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            padding: 5px 12px;
-            border-radius: 15px;
-            font-size: 0.85em;
+            display: inline-block;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
             font-weight: bold;
-            z-index: 1;
+            margin-bottom: 15px;
+        }
+        
+        .badge-need {
+            background: #28a745;
+            color: white;
+        }
+        
+        .badge-want {
+            background: #ffc107;
+            color: #333;
         }
         
         .gift-image {
@@ -334,14 +294,8 @@
         }
         
         @media (max-width: 968px) {
-            .content {
+            .gift-list {
                 grid-template-columns: 1fr;
-            }
-            
-            .summary-section {
-                position: relative;
-                top: 0;
-                max-height: none;
             }
         }
     </style>
@@ -391,19 +345,14 @@
                         </div>
                         
                         <div class="form-group">
-                            <label>Enllaç 1 (Decathlon, Amazon, etc.):</label>
+                            <label>Enllaç (Decathlon, Amazon, etc.):</label>
                             <input type="url" id="marc-link1" placeholder="https://www.decathlon.es/...">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label>Enllaç 2 (opcional):</label>
-                            <input type="url" id="marc-link2" placeholder="https://www.amazon.es/...">
                         </div>
                         
                         <button class="btn" onclick="addGift('marc')">➕ Afegir Regal</button>
                     </div>
                     
-                    <h2 class="section-title">Els meus regals</h2>
+                    <h2 class="section-title">Total regals - Marc</h2>
                     <div id="marc-list" class="gift-list"><div class="loading">⏳ Carregant...</div></div>
                 </div>
                 
@@ -436,19 +385,14 @@
                         </div>
                         
                         <div class="form-group">
-                            <label>Enllaç 1:</label>
+                            <label>Enllaç:</label>
                             <input type="url" id="aina-link1" placeholder="https://www.decathlon.es/...">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label>Enllaç 2 (opcional):</label>
-                            <input type="url" id="aina-link2" placeholder="https://www.amazon.es/...">
                         </div>
                         
                         <button class="btn" onclick="addGift('aina')">➕ Afegir Regal</button>
                     </div>
                     
-                    <h2 class="section-title">Els meus regals</h2>
+                    <h2 class="section-title">Total regals - Aina</h2>
                     <div id="aina-list" class="gift-list"><div class="loading">⏳ Carregant...</div></div>
                 </div>
                 
@@ -481,19 +425,14 @@
                         </div>
                         
                         <div class="form-group">
-                            <label>Enllaç 1:</label>
+                            <label>Enllaç:</label>
                             <input type="url" id="mama-link1" placeholder="https://www.decathlon.es/...">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label>Enllaç 2 (opcional):</label>
-                            <input type="url" id="mama-link2" placeholder="https://www.amazon.es/...">
                         </div>
                         
                         <button class="btn" onclick="addGift('mama')">➕ Afegir Regal</button>
                     </div>
                     
-                    <h2 class="section-title">Els meus regals</h2>
+                    <h2 class="section-title">Total regals - Mamà</h2>
                     <div id="mama-list" class="gift-list"><div class="loading">⏳ Carregant...</div></div>
                 </div>
                 
@@ -526,26 +465,16 @@
                         </div>
                         
                         <div class="form-group">
-                            <label>Enllaç 1:</label>
+                            <label>Enllaç:</label>
                             <input type="url" id="papa-link1" placeholder="https://www.decathlon.es/...">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label>Enllaç 2 (opcional):</label>
-                            <input type="url" id="papa-link2" placeholder="https://www.amazon.es/...">
                         </div>
                         
                         <button class="btn" onclick="addGift('papa')">➕ Afegir Regal</button>
                     </div>
                     
-                    <h2 class="section-title">Els meus regals</h2>
+                    <h2 class="section-title">Total regals - Papà</h2>
                     <div id="papa-list" class="gift-list"><div class="loading">⏳ Carregant...</div></div>
                 </div>
-            </div>
-            
-            <div class="summary-section">
-                <h3 class="summary-title">📋 Resum de Regals</h3>
-                <div id="summary-content"><div class="loading">⏳ Carregant...</div></div>
             </div>
         </div>
     </div>
@@ -584,7 +513,6 @@
                     const data = snapshot.val();
                     gifts[user] = data ? Object.values(data) : [];
                     window.renderGifts(user);
-                    window.updateSummary();
                 });
             });
         }
@@ -595,8 +523,6 @@
             
             event.target.classList.add('active');
             document.getElementById(user).classList.add('active');
-            
-            window.updateSummary();
         };
 
         window.addGift = async function(user) {
@@ -605,9 +531,8 @@
             const text = document.getElementById(`${user}-text`).value;
             const image = document.getElementById(`${user}-image`).value;
             const link1 = document.getElementById(`${user}-link1`).value;
-            const link2 = document.getElementById(`${user}-link2`).value;
             
-            if (!text && !image && !link1 && !link2) {
+            if (!text && !image && !link1) {
                 alert('Si us plau, afegeix almenys una descripció, imatge o enllaç!');
                 return;
             }
@@ -616,8 +541,7 @@
                 type,
                 text, 
                 image, 
-                link1, 
-                link2, 
+                link1,
                 id: Date.now() 
             };
 
@@ -628,7 +552,6 @@
                 document.getElementById(`${user}-text`).value = '';
                 document.getElementById(`${user}-image`).value = '';
                 document.getElementById(`${user}-link1`).value = '';
-                document.getElementById(`${user}-link2`).value = '';
             } catch (error) {
                 console.error('Error guardant:', error);
                 alert('Error al guardar el regal. Si us plau, intenta-ho de nou.');
@@ -662,14 +585,13 @@
                 
                 return `
                     <div class="gift-card">
-                        <div class="gift-badge ${badgeClass}">${badgeText}</div>
                         <button class="delete-btn" onclick="deleteGift('${user}', ${gift.id})">×</button>
+                        <div class="gift-badge ${badgeClass}">${badgeText}</div>
                         ${gift.image ? `<img src="${gift.image}" class="gift-image" alt="Imatge del regal" onerror="this.style.display='none'">` : ''}
                         ${gift.text ? `<div class="gift-text">${gift.text}</div>` : ''}
-                        ${gift.link1 || gift.link2 ? `
+                        ${gift.link1 ? `
                             <div class="gift-links">
-                                ${gift.link1 ? `<a href="${gift.link1}" target="_blank" class="gift-link">🔗 Enllaç 1</a>` : ''}
-                                ${gift.link2 ? `<a href="${gift.link2}" target="_blank" class="gift-link">🔗 Enllaç 2</a>` : ''}
+                                <a href="${gift.link1}" target="_blank" class="gift-link">🔗 Veure producte</a>
                             </div>
                         ` : ''}
                     </div>
@@ -678,28 +600,7 @@
         };
 
         window.updateSummary = function() {
-            const activeTab = document.querySelector('.tab-content.active');
-            const user = activeTab ? activeTab.id : 'marc';
-            const summaryContent = document.getElementById('summary-content');
-            
-            const userGifts = gifts[user];
-            
-            if (userGifts.length === 0) {
-                summaryContent.innerHTML = '<div class="empty-message">No hi ha regals encara</div>';
-                return;
-            }
-            
-            summaryContent.innerHTML = userGifts.map(gift => {
-                const badgeClass = gift.type === 'need' ? 'badge-need' : 'badge-want';
-                const badgeText = gift.type === 'need' ? 'Necessito' : 'Capritxo';
-                
-                return `
-                    <div class="summary-item">
-                        <span class="summary-badge ${badgeClass}">${badgeText}</span>
-                        <div>${gift.text || 'Sense descripció'}</div>
-                    </div>
-                `;
-            }).join('');
+            // Esta función ya no es necesaria porque todo se muestra en renderGifts
         };
 
         // Iniciar listeners en tiempo real
